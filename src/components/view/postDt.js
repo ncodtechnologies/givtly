@@ -20,7 +20,7 @@ class DtFrm extends Component {
     postDt = postDtArr.length>0 ? postDtArr[0] : null;
     return (
       <ScrollView>   
-        <GImageDetails post={postDt} />
+        <GImageDetails post={postDt} id_post={id_post} />
       </ScrollView>
     )
   }

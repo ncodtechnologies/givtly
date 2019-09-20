@@ -16,7 +16,7 @@ export default class App extends React.Component {
             <View>
             <View style={styles.container}>
                <View style={styles.box1}>
-                <Image  style={styles.img} source={{uri: `${BASE_URL}givtly/uploads/pic_${this.props.id_post}_1.png`}}/>
+                <Image  style={styles.img} source={{uri: `${BASE_URL}post/image/${this.props.id_post}/1`}}/>
                </View>
                <View style={{flexDirection:'column',paddingLeft:10, width:boxWidth, flex:1}}>
                       <View style={styles.heading}>

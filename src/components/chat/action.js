@@ -1,26 +1,12 @@
 import {
-  GET_POST_LIST,
-  GET_CAT_LIST,
-  GET_SUBCAT_LIST
+  SEND_CHAT_URL
 } from "../../constants";
 
-export const PostListState = {
-  LOADING: "POST_LIST_LOADING",
-  SUCCESS: "POST_LIST_SUCCESS",
-  ERROR: "POST_LIST_ERROR",
-  DONE: "POST_LIST_DONE"
-};
-export const CatListState = {
-  LOADING: "CAT_LIST_LOADING",
-  SUCCESS: "CAT_LIST_SUCCESS",
-  ERROR: "CAT_LIST_ERROR",
-  DONE: "CAT_LIST_DONE"
-};
-export const SubCatListState = {
-  LOADING: "SUBCAT_LIST_LOADING",
-  SUCCESS: "SUBCAT_LIST_SUCCESS",
-  ERROR: "SUBCAT_LIST_ERROR",
-  DONE: "SUBCAT_LIST_DONE"
+export const SendChatState = {
+  LOADING: "SEND_CHAT_LOADING",
+  SUCCESS: "SEND_CHAT_SUCCESS",
+  ERROR: "SEND_CHAT_ERROR",
+  DONE: "SEND_CHAT_DONE"
 };
 
 export const checkResult = (result, dispatch, setError) => {
@@ -45,6 +31,7 @@ const Fetcher = async (fetchData, type, dispatch) => {
   dispatch(setInStore(null, type.ERROR));
   try {
     const result = await fetchData();
+    console.log("givtly=>", JSON.stringify(result));
     if (checkResult(result, dispatch, error => setInStore(error, type.ERROR))) {
       dispatch(setInStore(result.data, type.DONE));
       dispatch(setInStore(true, type.SUCCESS));
@@ -52,59 +39,35 @@ const Fetcher = async (fetchData, type, dispatch) => {
       dispatch(setInStore(false, type.SUCCESS));
     }
   } catch (error) {
+    console.log("givtly=>", JSON.stringify(error));
     dispatch(setInStore(false, type.SUCCESS));
     dispatch(setInStore(error, type.ERROR));
   }
   dispatch(setInStore(false, type.LOADING));
 };
 
-export const getPostList = payload => dispatch => {
-  console.log(GET_POST_LIST+"?filter="+payload);
-  return Fetcher(
-    async () => {
-      const result = await fetch(GET_POST_LIST+"?filter="+payload, {
-        method: "GET"
-      });
-      return result.json().then(data => ({
-        data: data,
-        status: result.ok
-      }));
-    },
-    PostListState,
-    dispatch
-  );
-};
+export const sendChat = payload => dispatch => {
+  let data = {};
+  data.sender = "5d83c99a7298132a782a0327";
+  data.receiver ="5d83c99a7298132a782a0328";
+  data.message = "This is a msg";
 
-export const getCategoryList = payload => dispatch => {
-  console.log(GET_CAT_LIST+"?section="+payload);
-  return Fetcher(
+ // const { data } = payload;
+  const body = JSON.stringify(data);
+  console.log("givtly=>", JSON.stringify(body));
+  return Fetcher (
     async () => {
-      const result = await fetch(GET_CAT_LIST+"?section="+payload, {
-        method: "GET"
+      const result = await fetch(SEND_CHAT_URL, {
+        method: "POST",
+        body,
+        headers: {"Content-Type": "application/json"}
       });
       return result.json().then(data => ({
         data: data,
         status: result.ok
       }));
     },
-    CatListState,
-    dispatch
-  );
-};
-
-export const getSubCategoryList = payload => dispatch => {
-  console.log(GET_SUBCAT_LIST+"?id_category="+payload);
-  return Fetcher(
-    async () => {
-      const result = await fetch(GET_SUBCAT_LIST+"?id_category="+payload, {
-        method: "GET"
-      });
-      return result.json().then(data => ({
-        data: data,
-        status: result.ok
-      }));
-    },
-    SubCatListState,
+    SendChatState,
     dispatch
   );
 };

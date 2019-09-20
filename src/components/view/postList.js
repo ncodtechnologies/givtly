@@ -85,7 +85,7 @@ class ListFrm extends Component {
       dataSource={ds.cloneWithRows(this.props.postList.data)}
       renderRow={data =>
         <TouchableOpacity onPress={() => this.props.navigation.navigate("PostDt", { id_post : data.id_post })} >
-          <View style={styles.box}><GImageDescription id_post={data.id_post} place={data.place} price={data.price} name={data.title} date={data._date}  description={data.description}  /></View><GBorder/></TouchableOpacity>
+          <View style={styles.box}><GImageDescription id_post={data._id} place={data.place} price={data.price} name={data.title} date={data._date}  description={data.description}  /></View><GBorder/></TouchableOpacity>
       }
     />
     </View>

@@ -16,6 +16,7 @@ const boxWidth = (width * .93) - imgWidth;
 
 export default class App extends React.Component {
   render() {
+    const { _id } = this.props.post;
     return (
             <View>
                      
@@ -25,9 +26,9 @@ export default class App extends React.Component {
                     height={400}
                     indicatorColor="#EF0A05"
                     dataSource={[
-                      { url:`${BASE_URL}post/image/5d760f9e7161d83770367180/` },
-                      { url:`${BASE_URL}givtly/uploads/pic_${this.props.post.id_post}_2.png` },
-                      { url:`${BASE_URL}givtly/uploads/pic_${this.props.post.id_post}_3.png` }
+                      { url:`${BASE_URL}post/image/${_id}/0` },
+                      { url:`${BASE_URL}post/image/${_id}/1` },
+                      { url:`${BASE_URL}post/image/${_id}/2` }
                   ]} />
                 </View>
                 <View style={styles.icons}> 
