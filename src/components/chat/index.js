@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {StyleSheet, Text, CheckBox, View, ScrollView, TextInput} from 'react-native';
 import { connect } from "react-redux";
+import { sendChat } from "./action";
 
 class UploadFrm extends Component {
 
@@ -12,7 +13,7 @@ class UploadFrm extends Component {
   };
 
   componentDidMount = () => {
-    
+    this.props.sendChat("");
   };
 
   render() {
@@ -27,7 +28,7 @@ const mapStateToProps = ({  }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  
+  sendChat: payload => dispatch(sendChat(payload)),
 });
 
 export default connect(

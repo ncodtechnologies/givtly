@@ -45,7 +45,7 @@ const UploadFrm = ({
           />
             )
     ));
-    
+
     openImagePicker = (i) => {
         ImagePicker.showImagePicker(options, (response) => {
             if (response.didCancel) {
@@ -91,7 +91,9 @@ const UploadFrm = ({
                         </ScrollView>
                 </View>
 
-                <TALabel label="City"/> 
+                <TALabel label="Title"/>
+                <TextInput style={{borderWidth:.5,margin:10}}/>
+                <TALabel label="Place"/> 
                 <View>
                   <Picker >  
                     <Picker.Item label="Abu Dhabi" value="Abu Dhabi"/>
@@ -152,7 +154,6 @@ export default withFormik({
         title: "title11",
         description: "description1",
         place: "place1",
-        date: "2019-10-10",
         price: 100,
         country: "UAE",
         city: "Dubai",
