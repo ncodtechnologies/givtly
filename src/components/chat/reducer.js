@@ -1,5 +1,6 @@
 import {
-  SendChatState
+  SendChatState,
+  getChatState
 } from "./action";
 
 export const chatSend = (state = initialSencdChatState, action) => {
@@ -17,7 +18,29 @@ export const chatSend = (state = initialSencdChatState, action) => {
   }
 };
 
+export const chatGet = (state = initialGetChatState, action) => {
+  switch (action.type) {
+    case getChatState.LOADING:
+      return { ...state, loading: action.state };
+    case getChatState.DONE:
+      return { ...state, data: action.state };
+    case getChatState.SUCCESS:
+      return { ...state, success: action.state };
+    case getChatState.ERROR:
+      return { ...state, error: action.state };
+    default:
+      return state;
+  }
+};
+
 const initialSencdChatState = {
+  loading: false,
+  data: null,
+  success: null,
+  error: null
+};
+
+const initialGetChatState = {
   loading: false,
   data: null,
   success: null,

@@ -65,7 +65,10 @@ export const getPostList = (id_sub_category, filter) => dispatch => {
     async () => {
       console.log("givtly=>", `${GET_POST_LIST}/subcategory/${id_sub_category}`);
       const result = await fetch(`${GET_POST_LIST}/subcategory/${id_sub_category}`, {
-        method: "GET"
+        method: "GET",
+        headers: {
+          'Authorization': 'Bearer ' + Base64.btoa("5d85ddda36904e245450069f")
+        }
       });
       return result.json().then(data => ({
         data: data,
@@ -81,8 +84,12 @@ export const getCategoryList = payload => dispatch => {
   console.log("givtly=>1", `${GET_CAT_LIST}/${payload}`);
   return Fetcher(
     async () => {
+
       const result = await fetch(`${GET_CAT_LIST}/${payload}`, {
-        method: "GET"
+        method: "GET",
+        headers: {
+          'Authorization': 'Bearer ' + Base64.btoa("5d85ddda36904e245450069f")
+        }
       });
       return result.json().then(data => ({
         data: data,
@@ -99,7 +106,10 @@ export const getSubCategoryList = (id_category, filter) => dispatch => {
   return Fetcher(
     async () => {
       const result = await fetch(`${GET_SUBCAT_LIST}/${id_category}`, {
-        method: "GET"
+        method: "GET",
+        headers: {
+          'Authorization': 'Bearer ' + Base64.btoa("5d85ddda36904e245450069f")
+        }
       });
       return result.json().then(data => ({
         data: data,
@@ -109,4 +119,47 @@ export const getSubCategoryList = (id_category, filter) => dispatch => {
     SubCatListState,
     dispatch
   );
+};
+
+
+const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+const Base64 = {
+  btoa: (input:string = '')  => {
+    let str = input;
+    let output = '';
+
+    for (let block = 0, charCode, i = 0, map = chars;
+    str.charAt(i | 0) || (map = '=', i % 1);
+    output += map.charAt(63 & block >> 8 - i % 1 * 8)) {
+
+      charCode = str.charCodeAt(i += 3/4);
+
+      if (charCode > 0xFF) {
+        throw new Error("'btoa' failed: The string to be encoded contains characters outside of the Latin1 range.");
+      }
+      
+      block = block << 8 | charCode;
+    }
+    
+    return output;
+  },
+
+  atob: (input:string = '') => {
+    let str = input.replace(/=+$/, '');
+    let output = '';
+
+    if (str.length % 4 == 1) {
+      throw new Error("'atob' failed: The string to be decoded is not correctly encoded.");
+    }
+    for (let bc = 0, bs = 0, buffer, i = 0;
+      buffer = str.charAt(i++);
+
+      ~buffer && (bs = bc % 4 ? bs * 64 + buffer : buffer,
+        bc++ % 4) ? output += String.fromCharCode(255 & bs >> (-2 * bc & 6)) : 0
+    ) {
+      buffer = chars.indexOf(buffer);
+    }
+
+    return output;
+  }
 };

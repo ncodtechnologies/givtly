@@ -13,14 +13,10 @@ class DtFrm extends Component {
   };
 
   render() {
-    const id_post = this.props.navigation.state.params.id_post;
-    var postDtArr = this.props.postList.data.filter(function (el) {
-      return el.id_post == id_post;
-    });
-    postDt = postDtArr.length>0 ? postDtArr[0] : null;
+    const postDt = this.props.navigation.state.params.post;
     return (
       <ScrollView>   
-        <GImageDetails post={postDt} id_post={id_post} />
+        <GImageDetails post={postDt} />
       </ScrollView>
     )
   }

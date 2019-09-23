@@ -23,7 +23,7 @@ class Container extends Component {
 
   componentDidMount = () => {
     this.props.getCategoryList("1");
-    this.props.getSubCategoryList("1","");
+    this.props.getSubCategoryList("","");
   };
  
   

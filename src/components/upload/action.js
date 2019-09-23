@@ -49,12 +49,15 @@ const Fetcher = async (fetchData, type, dispatch) => {
 export const addPost = payload => dispatch => {
   const { data } = payload;
   const body = data;
-  console.log("givtly=>", body);
+  console.log("givtly=>", JSON.stringify(body));
   return Fetcher (
     async () => {
       const result = await fetch(ADD_POST_URL, {
         method: "POST",
-        body
+        body,
+        headers: {
+          'Authorization': 'Bearer ' + Base64.btoa("5d85ddda36904e245450069f")
+        }
       });
       return result.json().then(data => ({
         data: data,

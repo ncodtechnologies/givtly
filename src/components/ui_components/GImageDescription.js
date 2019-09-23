@@ -12,6 +12,13 @@ const boxWidth = (width * .93) - imgWidth;
 
 export default class App extends React.Component {
   render() {
+    
+    dateFormat = date => {
+      return (
+        date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
+      );
+    };
+
     return (
             <View>
             <View style={styles.container}>
@@ -28,7 +35,7 @@ export default class App extends React.Component {
                       </View>
                       <View style={styles.box3}>
                                 <Text style={{fontWeight:'bold',fontSize:14}}>{this.props.place}</Text>
-                                <Text style={{fontWeight:'bold',textAlign:'right',fontSize:14}}>{this.props.date}</Text>
+                                <Text style={{fontWeight:'bold',textAlign:'right',fontSize:14}}>{dateFormat(new Date(this.props.date))}</Text>
                       </View>
                </View>
             </View>

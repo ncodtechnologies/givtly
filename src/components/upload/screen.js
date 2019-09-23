@@ -14,6 +14,7 @@ const UploadFrm = ({
         values,
         categoryList,
         subCategoryList,
+        getCategoryList,
         getSubCategoryList,
         errors
       }) => {
@@ -30,18 +31,16 @@ const UploadFrm = ({
     const renderCatList = () =>
             categoryList.data.map(category => (
           <Picker.Item
-            key={category.id_category}
             label={category.category}
-            value={category.id_category}
+            value={category._id}
           />
     ));
 
     const renderSubCatList = () =>
             (subCategoryList.data && subCategoryList.data.map(category => (
           <Picker.Item
-            key={category.id_sub_category}
-            label={category.sub_category}
-            value={category.id_sub_category}
+            label={category.subcategory}
+            value={category._id}
           />
             )
     ));
@@ -65,6 +64,11 @@ const UploadFrm = ({
             setFieldValue(`file_${i}`, file);
           }
         });
+    }
+    
+    selectCat = (value) => {
+      setFieldValue('category', value);
+      getSubCategoryList(value, "")
     }
 
     return (
@@ -92,10 +96,15 @@ const UploadFrm = ({
                 </View>
 
                 <TALabel label="Title"/>
-                <TextInput style={{borderWidth:.5,margin:10}}/>
+                <TextInput style={{borderWidth:.5,margin:10}}
+                  onChangeText={(text)=>setFieldValue(`title`, text)}
+                  value={values.title}
+                />
                 <TALabel label="Place"/> 
                 <View>
-                  <Picker >  
+                  <Picker
+                    onValueChange={(value)=>setFieldValue('place', value)}
+                    selectedValue={values.place} >  
                     <Picker.Item label="Abu Dhabi" value="Abu Dhabi"/>
                     <Picker.Item label="Ajman" value="Ajman"/>
                     <Picker.Item label="Sharjah" value="Sharjah"/>
@@ -107,7 +116,12 @@ const UploadFrm = ({
                 </View> 
                 <TALabel label="Category"/> 
                 <View>
-                  <Picker onValueChange={(value)=>getSubCategoryList(value,"")} >  
+                  <Picker 
+                    onValueChange={(value)=>{ 
+                                        setFieldValue('section', value);
+                                        getCategoryList(value)
+                                       }}
+                    selectedValue={values.section} >  
                     <Picker.Item label="Work Gifts" value="1"/>
                     <Picker.Item label="Birthday Gifts" value="2"/>
                     <Picker.Item label="Wedding Gifts" value="3"/>
@@ -117,20 +131,30 @@ const UploadFrm = ({
                 </View> 
                 <TALabel label="Sub Category"/> 
                 <View>
-                  <Picker >  
-                      {renderCatList()}
-                  </Picker>    
+                  <Picker onValueChange={(value)=>{ 
+                                      this.selectCat(value)
+                                    }}
+                    selectedValue={values.category}  >   
+                      {renderCatList()} 
+                  </Picker>
                 </View> 
                 <TALabel label="Brand"/> 
                 <View>
-                  <Picker >  
+                  <Picker onValueChange={(value)=>{ setFieldValue('subcategory', value) }}
+                    selectedValue={values.subcategory}  >
                       {renderSubCatList()}
                   </Picker>    
                 </View> 
                 <TALabel label="Description"/>
-                <TextInput multiline={true} numberOfLines={5} style={{borderWidth:.5,margin:8}}/>
+                <TextInput 
+                  multiline={true} numberOfLines={5} style={{borderWidth:.5,margin:8}}
+                  onChangeText={(text)=>setFieldValue(`description`, text)}
+                  value={values.description}
+                  />
                 <TALabel label="Price"/>
-                <TextInput style={{borderWidth:.5,margin:10}}/>
+                <TextInput style={{borderWidth:.5,margin:10}}
+                  onChangeText={(text)=>setFieldValue(`price`, text)}
+                  value={values.price}/>
                 <View style={{flex:0,flexDirection:'row',alignItems:'center'}}>
                       <CheckBox style={{padding:8}} />
                       <Text style={{fontSize:15}}>Include contact information</Text>
@@ -149,14 +173,15 @@ export default withFormik({
     mapPropsToValues: ({
         postAdd, categoryList, subCategoryList, addPost
     }) => ({
-        id_sub_category: 1,
+        subcategory: '',
+        category: '',
         id_user: 1,
-        title: "title11",
-        description: "description1",
-        place: "place1",
-        price: 100,
+        title: "",
+        description: "",
+        place: "",
+        price: "",
         country: "UAE",
-        city: "Dubai",
+        city: "",
         contact: 1,
         file_0 : null,
         file_1 : null,
@@ -164,7 +189,6 @@ export default withFormik({
         addPost
     }),
     validateOnChange: false,
-
     validationSchema: Yup.object().shape({
      /*   title: Yup.string().required("Required"),
         description: Yup.string().required("Required"),
@@ -177,7 +201,8 @@ export default withFormik({
 
     handleSubmit: (values, { props }) => {
       let data = new FormData();
-      data.append("id_sub_category", values.id_sub_category);
+      data.append("subcategory", values.subcategory);
+      data.append("category", values.category);
       data.append("id_user", values.id_user);
       data.append("title", values.title);
       data.append("description", values.description);
@@ -191,7 +216,9 @@ export default withFormik({
       data.append("files[]", values.file_1);
       data.append("files[]", values.file_2);
       
-      return values.addPost({ data });
+      values.addPost({ data });
+      alert("Your post has been uploaded successfully!");
+      props.navigation.navigate("CategoryList");
     }
   })(UploadFrm);
 

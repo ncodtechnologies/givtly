@@ -17,6 +17,13 @@ const boxWidth = (width * .93) - imgWidth;
 export default class App extends React.Component {
   render() {
     const { _id } = this.props.post;
+
+    dateFormat = date => {
+      return (
+        date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
+      );
+    };
+
     return (
             <View>
                      
@@ -47,13 +54,21 @@ export default class App extends React.Component {
                       <Text style={{fontSize:18,paddingTop:7, textAlign:"center"}}>{this.props.post.description}</Text>
                     </View> 
                       <View style={styles.box}>
-                        <Text style={{fontWeight:'bold',fontSize:20}}>AED {this.props.post.price}</Text>
+                        <Text style={{fontWeight:'bold',fontSize:20, color:'#0D80A4'}}>AED {this.props.post.price}</Text>
                         <View >
-                          <Text style={{textAlign:'right',fontSize:18,paddingBottom:5}}>{this.props.post._date}</Text>
                           <Text style={{textAlign:'right',fontSize:18,paddingBottom:5}}>{this.props.post.place}</Text>
+                          <Text style={{textAlign:'right',fontSize:18,paddingBottom:5}}>{dateFormat(new Date(this.props.post.date))}</Text>
                         </View>
                    </View>
-
+                <GBorder/>
+                <View style={{ flexDirection: "column", flex:1, padding: 10 }} >
+                  <TouchableOpacity style={{flex:1,width:"100%", marginVertical:5, alignItems: "center", borderColor:"#0D80A4", borderWidth:1, padding: 15, borderRadius:5 }} >
+                    <Text style={{ fontSize: 20, color:"#0D80A4" }} > Call </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={{flex:1,width:"100%", marginVertical:5, alignItems: "center", borderColor:"#0B9973", borderWidth:1, padding: 15, borderRadius:5 }} >
+                    <Text style={{ fontSize: 20, color:"#0B9973" }} > Message </Text>
+                  </TouchableOpacity>
+                </View>
             </View>
         </View>
      )
@@ -66,10 +81,11 @@ const styles = StyleSheet.create({
     flexDirection:'column',
   },
   box:{
+    marginTop : 10,
     flexDirection:'row',
     alignItems:'flex-end',
     justifyContent:'space-between',
-    padding: 10,
+    padding: 15,
     width:boxWidth,
   },
   icons:{

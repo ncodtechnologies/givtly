@@ -1,14 +1,8 @@
 import { createStackNavigator, createAppContainer } from "react-navigation";
-import ChatList from "../components/chat/chatList";
-import UploadPostDt from "../components/chat/";
+import Login from "../components/login";
 
 const root = createStackNavigator({
-  ChatList:{
-       screen :ChatList
-      },
-  UploadPostDt:{
-       screen : UploadPostDt
-  },
+  Login: Login
 },
 {
   defaultNavigationOptions: {

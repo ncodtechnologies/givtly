@@ -4,7 +4,7 @@ export const Color = {
   secondary: "#b61e89"
 };
     
-export const BASE_URL = "http://192.168.1.100:3000/";
+export const BASE_URL = "http://192.168.1.102:3000/";
             
 export const GET_POST_LIST   = `${BASE_URL}post`;
 export const GET_CAT_LIST    = `${BASE_URL}category`;

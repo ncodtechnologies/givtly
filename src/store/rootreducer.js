@@ -6,6 +6,10 @@ import {
 import {
   postAdd
 } from "../components/upload/reducer";
+import {
+  chatGet,
+  chatSend
+} from "../components/chat/reducer"
 
 const config = {
   key: "primary",
@@ -15,7 +19,9 @@ const config = {
     "postList",
     "categoryList",
     "subCategoryList",
-    "postAdd"
+    "postAdd",
+    "chatGet",
+    "chatSend"
   ]
 };
 
@@ -23,7 +29,9 @@ const combinedReducers = {
   postList,
   categoryList,
   subCategoryList,
-  postAdd
+  postAdd,
+  chatGet,
+  chatSend
 };
 
 export default persistCombineReducers(config, combinedReducers);
