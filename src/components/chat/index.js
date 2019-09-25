@@ -35,7 +35,7 @@ class UploadFrm extends Component {
     if(this.state.message == "") return;
     let data = {};
     data.receiver = this.state.receiver;
-    data.sender ="5d85ddda36904e245450069f";
+    data.sender ="5d8538ab2c627e19284c87ef";
     data.message = this.state.message;
     this.props.sendChat(data);
     this.setState({messageSending : true});
@@ -45,7 +45,7 @@ class UploadFrm extends Component {
   renderChatItems  () {
     return this.props.chatGet.data.map(chatItem =>{
       return (
-        <Chat isLeft={chatItem.receiver == "5d85ddda36904e245450069f"} message={chatItem.message} />
+        <Chat isLeft={chatItem.receiver == "5d8538ab2c627e19284c87ef"} message={chatItem.message} />
       )
     })
   }

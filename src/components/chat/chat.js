@@ -11,7 +11,6 @@ render(){
 }
 }
 
-
 const styles = StyleSheet.create({
     box:{
       padding:10,

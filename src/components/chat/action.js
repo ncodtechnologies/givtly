@@ -60,11 +60,7 @@ export const sendChat = data => dispatch => {
     async () => {
       const result = await fetch(SEND_CHAT_URL, {
         method: "POST",
-        body,
-        headers: {
-          'Authorization': 'Bearer ' + Base64.btoa("5d85ddda36904e245450069f"),
-          "Content-Type": "application/json"
-        }
+        body
       });
       return result.json().then(data => ({
         data: data,
